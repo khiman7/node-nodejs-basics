@@ -1,3 +1,8 @@
 export const parseArgs = () => {
-    // Write your code here 
+  const [executor, file, ...rest] = process.argv;
+  const args = {};
+	
+  rest.forEach((arg, index, array) => {
+	// TODO
+  });
 };
