@@ -1,11 +1,12 @@
 import { readFile } from 'fs/promises';
 import { existsSync } from 'fs';
+import { fileURLToPath } from 'url';
 import { join } from 'path';
 
-const FILENAME = 'fileToRead.txt';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export const read = async () => {
-  const filepath = join('./files', FILENAME);
+  const filepath = join(__dirname, 'files', 'fileToRead.txt');
 
   if (!existsSync(filepath)) {
     throw new Error('FS operation failed');

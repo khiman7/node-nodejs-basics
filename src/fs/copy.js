@@ -1,14 +1,18 @@
 import { cp } from 'fs/promises';
 import { existsSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { join } from 'path';
 
-const SRC_DIR = './files';
-const DEST_DIR = './files_copy';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export const copy = async () => {
-  if (!existsSync('./files') || existsSync('./files_copy')) {
+  const source = join(__dirname, 'files');
+  const destination = join(__dirname, 'files_copy');
+  
+  if (!existsSync(source) || existsSync(destination)) {
     throw new Error('FS operation failed');
   } else {
-    await cp(SRC_DIR, DEST_DIR, { recursive: true });
+    await cp(source, destination, { recursive: true });
   }
 };
 
