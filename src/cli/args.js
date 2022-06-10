@@ -4,16 +4,20 @@ export const parseArgs = () => {
 
   rest.forEach((arg, index, array) => {
     if (arg.startsWith('--')) {
-      args[arg.slice(2)] = array[index + 1];
+      const key = arg.slice(2);
+      const value = array[index + 1];
+      
+      args[key] = value;
     }
   });
 
-  Object.entries(args).forEach((entry, index, array) => {
-    const [key, value] = entry;
+  const output = Object.entries(args).reduce((acc, [key, value]) => {
+    acc.push(`${key} is ${value}`);
+    
+    return acc;
+  }, []).join(', ');
 
-    process.stdout.write(`${key} is ${value}`);
-    process.stdout.write(`${index === array.length - 1 ? '' : ', '}`);
-  });
+  console.log(output);
 };
 
 parseArgs();

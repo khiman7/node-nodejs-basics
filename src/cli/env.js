@@ -7,12 +7,13 @@ export const parseEnv = () => {
     }
   }
 
-  Object.entries(variables).forEach((entry, index, array) => {
-    const [key, value] = entry;
+  const output = Object.entries(variables).reduce((acc, [key, value]) => {
+    acc.push(`${key}=${value}`);
+    
+    return acc;
+  }, []).join('; ');
 
-    process.stdout.write(`${key}=${value}`);
-    process.stdout.write(`${index === array.length - 1 ? '' : '; '}`);
-  });
+  console.log(output);
 };
 
 parseEnv();
