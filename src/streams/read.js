@@ -1,13 +1,17 @@
 import { createReadStream } from 'fs';
 import { pipeline } from 'stream/promises';
+import { fileURLToPath } from 'url';
 import { join } from 'path';
 
-const FILENAME = 'fileToRead.txt';
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export const read = async () => {
-  const filepath = join('./files', FILENAME);
+  const filepath = join(__dirname, 'files', 'fileToRead.txt');
 
-  await pipeline(createReadStream(filepath), process.stdout);
+  await pipeline(
+    createReadStream(filepath),
+    process.stdout,
+  );
 };
 
 read();

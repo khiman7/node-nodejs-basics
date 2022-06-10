@@ -11,7 +11,7 @@ export const transform = async () => {
     },
   });
 
-  await pipeline(process.stdin, ...[transform], process.stdout);
+  await pipeline(process.stdin, transform, process.stdout);
 };
 
 transform();
