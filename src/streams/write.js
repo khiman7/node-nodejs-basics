@@ -9,7 +9,7 @@ export const write = async () => {
   const source = join(__dirname, 'files', 'fileToRead.txt');
   const destination = join(__dirname, 'files', 'fileToWrite.txt');
 
-  await pipeline(createReadStream(src), createWriteStream(dest));
+  await pipeline(createReadStream(source), createWriteStream(destination));
 };
 
 write();
