@@ -1,9 +1,14 @@
 import { cpus } from 'os';
 import { Worker } from 'worker_threads';
+import { fileURLToPath } from 'url';
+import { join } from 'path';
+
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 const compute = (n) => {
   return new Promise((resolve, reject) => {
-    const worker = new Worker('./worker.js', { workerData: { n } });
+    const filepath = join(__dirname, 'worker.js');
+    const worker = new Worker(filepath, { workerData: { n } });
 
     worker.on('message', resolve);
     worker.on('error', reject);
@@ -17,10 +22,10 @@ const compute = (n) => {
 
 const composeResults = (results) => {
   return results.map((result) => {
-    const { status } = result;
+    const { status, value } = result;
 
     if (status === 'fulfilled') {
-      return { status: 'resolved', data: result.value }
+      return { status: 'resolved', data: value }
     } else if (status === 'rejected') {
       return { status: 'error', data: null };
     }
